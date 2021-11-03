@@ -17,7 +17,7 @@ The DNF is highly related to the [Manifold Flow](https://github.com/johannbrehme
 
 1. The data can be inflated with Gaussian noise.
 2. We include the DNF as new mode for the ℳ-flow.
-3. A new dataset, the thin spiral, was added.
+3. New datasets, a thin spiral, a von Mises on a circle, and a mixture of von Mises on a sphere were added.
 4. A new folder, [experiments/plots](experiments/plots), for generating the images from the paper was added.
 5. A new folder, [experiments/benchmarks](experiments/benchmarks), for benchmarking the DNF was added.
 6. The evaluate.py was modified and now includes the grid evaluation for the thin spiral and gan2d image manifold, the latent interpolations, the density estimation for the PAE, the latent density estimation on the thin spiral, and the KS statistics for the circle and sphere experiments.
@@ -40,7 +40,7 @@ To use the model for your own data, you need to create a simulator (see [experim
 
 ### Benchmarks
 
-We benchmark the DNF with the ℳ-flow, [Probabilistic Auto Encoder](https://arxiv.org/abs/2006.05479) (PAE), and [InfoMax Variational Autoencoder](https://github.com/AliLotfi92/InfoMaxVAE). For that, we rely on the original implementations of those models, and modify them where appropriate, see [experiments/benchmarks/infomax_vae](experiments/benchmarks/infomax_vae) and [experiments/benchmarks/pae](experiments/benchmarks/pae) for more details.
+We benchmark the DNF with the ℳ-flow, [Probabilistic Auto Encoder](https://arxiv.org/abs/2006.05479) (PAE), and [InfoMax Variational Autoencoder](https://github.com/AliLotfi92/InfoMaxVAE). For that, we rely on the original implementations of those models, and modify them where appropriate, see [experiments/benchmarks/vae](experiments/benchmarks/vae) and [experiments/benchmarks/pae](experiments/benchmarks/pae) for more details.
 
 
 ### Training & Evaluation
