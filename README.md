@@ -9,7 +9,7 @@ We combine Normalizing Flows (NFs) and Denoising Auto Encoder (DAE) by introduci
 2. generate new samples from p(x),
 3. infer low-dimensional latent variables.
 
-As a classical NF degenerates for data living on a low-dimensional manifold embedded in high dimensions, the DNF inflates the manifold valued data using Gaussian noise and learns a denoising mapping similar to DAE.
+As a classical NF degenerates for data living on a low-dimensional manifold embedded in high dimensions, the DNF inflates the manifold valued data using noise and learns a denoising mapping similar to DAE.
 
 ### Related Work
 
