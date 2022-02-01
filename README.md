@@ -3,8 +3,9 @@
 *Christian Horvat and Jean-Pascal Pfister 2021*
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![NeurIPS](http://img.shields.io/badge/NeurIPS-2021-8B6DA0.svg)](https://proceedings.neurips.cc/paper/2021/hash/4c07fe24771249c343e70c32289c1192-Abstract.html)
 
-We combine Normalizing Flows (NFs) and Denoising Auto Encoder (DAE) by introducing the Denoising Normalizing Flow (DNF), a generative model able to
+We combine Normalizing Flows (NFs) and Denoising Auto Encoder (DAE) by introducing the [Denoising Normalizing Flow ](https://proceedings.neurips.cc/paper/2021/hash/4c07fe24771249c343e70c32289c1192-Abstract.html) (DNF), a generative model able to
 1. approximate the data generating density p(x),
 2. generate new samples from p(x),
 3. infer low-dimensional latent variables.
@@ -13,10 +14,10 @@ As a classical NF degenerates for data living on a low-dimensional manifold embe
 
 ### Related Work
 
-The DNF is highly related to the [Manifold Flow](https://github.com/johannbrehmer/manifold-flow) introduced by Johann Brehmer and Kyle Cramner. Also, our code is a cabon copy of their implementation with the following additions:
+The DNF is highly related to the [Manifold Flow](https://github.com/johannbrehmer/manifold-flow) introduced by Johann Brehmer and Kyle Cramner. Also, our code is a carbon copy of their implementation with the following additions:
 
 1. The data can be inflated with Gaussian noise.
-2. We include the DNF as new mode for the ℳ-flow.
+2. We include the DNF as a new mode for the ℳ-flow.
 3. A new dataset, the thin spiral, was added.
 4. A new folder, [experiments/plots](experiments/plots), for generating the images from the paper was added.
 5. A new folder, [experiments/benchmarks](experiments/benchmarks), for benchmarking the DNF was added.
@@ -36,7 +37,7 @@ Thin spiral | 2 | 1 |  `--dataset thin_spiral`
 CelebA-HQ | 64 x 64 x 3 | ? |  `--dataset celeba`
 
 
-To use the model for your own data, you need to create a simulator (see [experiments/datasets](experiments/datasets)), and add it to [experiments/datasets/__init__.py](experiments/datasets/__init__.py). If you have problems with that, please don't hesitate to contact us.
+To use the model for your data, you need to create a simulator (see [experiments/datasets](experiments/datasets)), and add it to [experiments/datasets/__init__.py](experiments/datasets/__init__.py). If you have problems with that, please don't hesitate to contact us.
 
 ### Benchmarks
 
