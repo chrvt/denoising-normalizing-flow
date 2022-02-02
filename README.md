@@ -5,6 +5,8 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![NeurIPS](http://img.shields.io/badge/NeurIPS-2021-8B6DA0.svg)](https://proceedings.neurips.cc/paper/2021/hash/4c07fe24771249c343e70c32289c1192-Abstract.html)
 
+![illustration figure](DNF_thumbnail.png)
+
 We combine Normalizing Flows (NFs) and Denoising Auto Encoder (DAE) by introducing the [Denoising Normalizing Flow ](https://proceedings.neurips.cc/paper/2021/hash/4c07fe24771249c343e70c32289c1192-Abstract.html) (DNF), a generative model able to
 1. approximate the data generating density p(x),
 2. generate new samples from p(x),
