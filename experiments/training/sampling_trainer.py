@@ -210,7 +210,7 @@ class SamplingTrainer(BaseTrainer):
         
         for i_batch, batch_data in enumerate(train_loader):
             if i_batch == 0 and i_epoch == 0:
-                self.first_batch(batch_data)
+                self.first_batch(batch_data,forward_kwargs)
             batch_loss, batch_loss_contributions = self.batch_train(
                 batch_data, loss_functions, loss_weights, optimizer, clip_gradient, parameters,sig2,noise_type,i_epoch, forward_kwargs=forward_kwargs, custom_kwargs=custom_kwargs
             )
@@ -289,7 +289,7 @@ class SamplingTrainer(BaseTrainer):
 
         for batch_data in train_loader:
             if i_batch == 0 and i_epoch == 0:
-                self.first_batch(batch_data)
+                self.first_batch(batch_data,forward_kwargs)
             batch_loss, batch_loss_contributions = self.batch_train(
                 batch_data, loss_functions, loss_weights, optimizer, clip_gradient, parameters,sig2,noise_type,i_epoch,forward_kwargs=forward_kwargs, custom_kwargs=custom_kwargs
             )
@@ -389,13 +389,13 @@ class SamplingTrainer(BaseTrainer):
 class SamplingForwardTrainer(SamplingTrainer):
     """ Trainer for likelihood-based flow training when the model is not conditional. """
 
-    def first_batch(self, batch_data):
+    def first_batch(self, batch_data, forward_kwargs):
         if self.multi_gpu:
             x, y = batch_data
             if len(x.size()) < 2:
                 x = x.view(x.size(0), -1)
             x = x.to(self.device, self.dtype)
-            self.model(x[: x.shape[0] // torch.cuda.device_count(), ...])
+            self.model(x[: x.shape[0] // torch.cuda.device_count(), ...], **forward_kwargs)
     
     def add_noise(self,dataset,noise_type,x,sig2):
         if noise_type == 'gaussian':            
@@ -441,15 +441,18 @@ class SamplingForwardTrainer(SamplingTrainer):
             x = x.view(x.size(0), -1)
         x = x.to(self.device, self.dtype)
         #logger.info('First batch coordinate %s',x[0,0,0,0])
+
+        if sig2 is not None:
+            noise = self.add_noise('thin_spiral',noise_type,x,sig2)
+            x_tilde =  x + noise
+
+        else: x_tilde = x
+        
         if self.multi_gpu:
             results = nn.parallel.data_parallel(self.model, x, module_kwargs=forward_kwargs)
         else:
-            if sig2 is not None:
-                noise = self.add_noise('thin_spiral',noise_type,x,sig2)
-                x_tilde =  x + noise
-
-            else: x_tilde = x
             results = self.model(x_tilde, **forward_kwargs)
+            
         if len(results) == 4:
             x_reco, log_prob, u, hidden = results
         else:

@@ -51,17 +51,38 @@ class BaseSimulator:
             param_label = true_param_id
         run_label = "_run{}".format(run) if run > 0 else ""
 
-        x = np.load("{}/x_{}{}{}.npy".format(dataset_dir, tag, param_label, run_label))
         if self.parameter_dim() is not None:
             params = np.load("{}/theta_{}{}{}.npy".format(dataset_dir, tag, param_label, run_label))
         else:
-            params = np.ones(x.shape[0])
-
-        if limit_samplesize is not None:
-            logger.info("Only using %s of %s available samples", limit_samplesize, x.shape[0])
-            x = x[:limit_samplesize]
-            params = params[:limit_samplesize]
-
+            params = np.ones(limit_samplesize)
+            
+        path_to_data = r"{}/x_{}{}{}.npy".format(dataset_dir, tag, param_label, run_label)
+        if os.path.exists(path_to_data):
+            # import pdb
+            # pdb.set_trace()
+            x = np.load(os.path.normpath(path_to_data),allow_pickle=True)
+            if limit_samplesize is not None:
+                logger.info("Only using %s of %s available samples", limit_samplesize, x.shape[0])
+                x = x[:limit_samplesize]
+                params = params[:limit_samplesize]
+        else:
+            if not os.path.exists(r"{}".format(dataset_dir)):
+                os.makedirs(r"{}".format(dataset_dir))
+            
+            if limit_samplesize is not None:
+                if train:
+                    logger.info("Sampling and saving %s samples, 10 percent for evaluation", limit_samplesize)
+                    x = self.sample(limit_samplesize, parameters=params)
+                    x_save_path = r"{}/{}.npy".format(dataset_dir, 'x_train')
+                    np.save(os.path.normpath(x_save_path),x)
+                else:        
+                    x = self.sample(int(np.ceil(limit_samplesize/10)), parameters=params)
+                    x_save_path = r"{}/{}.npy".format(dataset_dir, 'x_test')
+                    np.save(os.path.normpath(x_save_path),x)                
+            else: logger.info('specify sample size (args.samplesize)!')
+         
+        # import pdb
+        # pdb.set_trace()
         if numpy:
             return x, params
         else:

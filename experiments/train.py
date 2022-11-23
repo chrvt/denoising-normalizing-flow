@@ -74,7 +74,7 @@ def parse_args():
     parser.add_argument("--sequential", action="store_true", help="Use sequential M/D training algorithm")
     parser.add_argument("--load", type=str, default=None, help="Model name to load rather than training from scratch, run is affixed automatically")
     parser.add_argument("--startepoch", type=int, default=0, help="Sets the first trained epoch for resuming partial training")
-    parser.add_argument("--samplesize", type=int, default=None, help="If not None, number of samples used for training")
+    parser.add_argument("--samplesize", type=int, default=10000, help="If not None, number of samples used for training")
     parser.add_argument("--epochs", type=int, default=50, help="Maximum number of epochs")
     parser.add_argument("--subsets", type=int, default=1, help="Number of subsets per epoch in an alternating training")
     parser.add_argument("--batchsize", type=int, default=100, help="Batch size for everything except OT training")

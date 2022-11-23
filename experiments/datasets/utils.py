@@ -2,7 +2,6 @@ import os
 import numpy as np
 import torch
 import requests
-import pandas as pd
 from matplotlib import pyplot as plt
 
 from torch.utils.data import Dataset
@@ -66,7 +65,7 @@ class NumpyDataset(Dataset):
         for array in arrays:
             if isinstance(array, str):
                 array = self._load_array_from_file(array, memmap_threshold)
-
+                
             if self.n is None:
                 self.n = array.shape[0]
             assert array.shape[0] == self.n
@@ -75,6 +74,8 @@ class NumpyDataset(Dataset):
                 self.memmap.append(True)
                 self.data.append(array)
             else:
+                # import pdb
+                # pdb.set_trace()
                 self.memmap.append(False)
                 tensor = torch.from_numpy(array).to(self.dtype)
                 self.data.append(tensor)

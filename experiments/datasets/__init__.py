@@ -1,7 +1,6 @@
 import logging
 
 from .base import IntractableLikelihoodError, DatasetNotAvailableError
-from .spherical_simulator import SphericalGaussianSimulator
 from .conditional_spherical_simulator import ConditionalSphericalGaussianSimulator
 from .images import ImageNetLoader, CelebALoader, FFHQStyleGAN2DLoader, IMDBLoader, FFHQStyleGAN64DLoader
 from .collider import WBFLoader, WBF2DLoader, WBF40DLoader
@@ -23,8 +22,6 @@ def load_simulator(args):
     assert args.dataset in SIMULATORS
     if args.dataset == "power":
         simulator = PolynomialSurfaceSimulator(filename=args.dir + "/experiments/data/samples/power/manifold.npz")
-    elif args.dataset == "spherical_gaussian":
-        simulator = SphericalGaussianSimulator(args.truelatentdim, args.datadim, epsilon=args.epsilon)
     elif args.dataset == "conditional_spherical_gaussian":
         simulator = ConditionalSphericalGaussianSimulator(args.truelatentdim, args.datadim, epsilon=args.epsilon)
     elif args.dataset == "thin_spiral":    

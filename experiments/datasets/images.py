@@ -86,8 +86,8 @@ class ImageNetLoader(BaseImageLoader):
 
 class CelebALoader(BaseImageLoader):
     def __init__(self):
-        super().__init__(
-            resolution=64, n_bits=8, random_horizontal_flips=True, gdrive_file_ids={"train": "1bcaqMKWzJ-2ca7HCQrUPwN61lfk115TO", "test": "1WfE64z9FNgOnLliGshUDuCrGBfJSwf-t"},
+        super().__init__(                                                        
+            resolution=64, n_bits=8, random_horizontal_flips=True, gdrive_file_ids={"train": "1xDlVwFjFpts7gcJglPpQg8zu9g4PhuGG", "test": "1ihhlOel2rriGrzRGdYsfWsVIYB-q_cKa"},
         )
 
 

@@ -624,16 +624,18 @@ class ForwardTrainer(Trainer):
             x = x.view(x.size(0), -1)
         x = x.to(self.device, self.dtype)
         #logger.info('First batch coordinate %s',x[0,0,0,0])
+
+        if sig2 is not None:
+            noise = self.add_noise('thin_spiral',noise_type,x,sig2)
+            x_tilde =  x + noise
+
+        else: x_tilde = x
+        
         if self.multi_gpu:
             results = nn.parallel.data_parallel(self.model, x, module_kwargs=forward_kwargs)
         else:
-            if sig2 is not None:
-                noise = self.add_noise('thin_spiral',noise_type,x,sig2)
-                x_tilde =  x + noise
-
-            else: x_tilde = x
-            
             results = self.model(x_tilde, **forward_kwargs)
+       
         if len(results) == 4:
             x_reco, log_prob, u, hidden = results
         else:
@@ -707,17 +709,19 @@ class ConditionalForwardTrainer(Trainer):
         params = params.to(self.device, self.dtype)
         self._check_for_nans("Training data", x, params)
 
+        if sig2 is not None:
+            noise = self.add_noise('thin_spiral',noise_type,x,sig2)
+            x_tilde =  x + noise
+        else: x_tilde = x
+        
+        results = self.model(x, context=params, **forward_kwargs)
+            
         if self.multi_gpu:
             forward_kwargs["context"] = params
             results = nn.parallel.data_parallel(self.model, x, module_kwargs=forward_kwargs)
         else:
-            if sig2 is not None:
-                noise = self.add_noise('thin_spiral',noise_type,x,sig2)
-                x_tilde =  x + noise
-            else: x_tilde = x
+            results = self.model(x_tilde, **forward_kwargs)
             
-            results = self.model(x, context=params, **forward_kwargs)
-
         if len(results) == 4:
             x_reco, log_prob, u, hidden = results
         else:

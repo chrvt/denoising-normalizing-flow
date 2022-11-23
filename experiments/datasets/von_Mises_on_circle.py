@@ -37,7 +37,7 @@ class VonMisesSimulator(BaseSimulator):
         raise NotImplementedError
 
     def sample(self, n_samples, parameters=None):          
-        z = self._draw_z(n)
+        z,_ = self._draw_z(n_samples)
         x = self._transform_z_to_x(z)
         return x
 
@@ -53,8 +53,11 @@ class VonMisesSimulator(BaseSimulator):
         z = np.random.vonmises(self.mu,self.kappa,n)
         return z, 0
 
-    def _transform_z_to_x(self, z): 
-        raise NotImplementedError
+    def _transform_z_to_x(self, latent_):
+        d1x = - np.cos(latent_) * 3
+        d1y =   np.sin(latent_) * 3
+        data = np.stack([ d1x,  d1y], axis=1) 
+        return data
 
     def _transform_x_to_z(self, x):
         raise NotImplementedError

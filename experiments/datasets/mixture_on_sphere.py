@@ -80,15 +80,15 @@ class MixtureSphereSimulator(BaseSimulator):
         return theta, phi
     
     
-    def _transform_z_to_x(self, theta,phi, mode='train'):
+    def _transform_z_to_x(self, theta,phi):
         c, a = 0, 1
         d1x = (c + a*np.sin(theta)) * np.cos(phi)
         d1y = (c + a*np.sin(theta)) * np.sin(phi)
         d1z = (a * np.cos(theta))
         x = np.stack([ d1x, d1y, d1z], axis=1) 
         params = np.ones(x.shape[0])
-        if mode=='train':
-            x = NumpyDataset(x, params)
+        # if mode=='train':
+        #     x = NumpyDataset(x, params)
         return x
 
     def _transform_x_to_z(self, x):

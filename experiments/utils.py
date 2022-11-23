@@ -61,9 +61,12 @@ def create_filename(type_, label, args):
         filename = "{}/experiments/data/paramscan/{}.pickle".format(args.dir, args.paramscanstudyname)
     else:
         raise NotImplementedError
-
+    
+    #import pdb
+    #pdb.set_trace() 
+    
     os.makedirs(os.path.dirname(filename), exist_ok=True)
-
+    
     return filename
 
 
