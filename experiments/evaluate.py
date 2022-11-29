@@ -740,6 +740,9 @@ if __name__ == "__main__":
 
     # Data set
     simulator = load_simulator(args)
+    x_test, _ = simulator.load_dataset(
+        train=False, numpy=True, ood=False, dataset_dir=create_filename("dataset", None, args), true_param_id=args.trueparam, joint_score=False, limit_samplesize=args.evaluate,
+    )
     
     if args.only_fid:
         try:

@@ -76,9 +76,15 @@ class BaseSimulator:
                     x_save_path = r"{}/{}.npy".format(dataset_dir, 'x_train')
                     np.save(os.path.normpath(x_save_path),x)
                 else:        
-                    x = self.sample(int(np.ceil(limit_samplesize/10)), parameters=params)
+                    z, _ = self._draw_z(int(np.ceil(limit_samplesize/10)))
+                    x = self._transform_z_to_x(z)                 
+                    #x = self.sample(int(np.ceil(limit_samplesize/10)), parameters=params)
+                    z_save_path = r"{}/{}.npy".format(dataset_dir, 'x_test_latent')
+                    np.save(os.path.normpath(z_save_path),z)  
+                    
                     x_save_path = r"{}/{}.npy".format(dataset_dir, 'x_test')
-                    np.save(os.path.normpath(x_save_path),x)                
+                    np.save(os.path.normpath(x_save_path),x)  
+                    
             else: logger.info('specify sample size (args.samplesize)!')
          
         # import pdb
